@@ -1,0 +1,21 @@
+
+main: main.o note_player_pc.o rtttl_player.o melody.o
+	g++ main.o  note_player_pc.o rtttl_player.o melody.o -o main.exe
+
+main.o: main.cpp fur_elise.hpp rtttl_player.hpp melody.cpp note_player_pc.hpp
+	g++ -c main.cpp -o main.o
+
+note_player_pc.o: note_player_pc.cpp note_player_pc.hpp note_player.hpp note.hpp
+	g++ -c note_player_pc.cpp -o note_player_pc.o
+
+melody.o: melody.cpp melody.hpp note_player.hpp note.hpp
+	g++ -c melody.cpp -o melody.o
+
+rtttl_player.o: rtttl_player.cpp rtttl_player.hpp note_player.hpp note.hpp
+	g++ -c rtttl_player.cpp -o rtttl_player.o
+
+clean:
+	rm -rf *o main.exe
+
+run: main
+	./main.exe

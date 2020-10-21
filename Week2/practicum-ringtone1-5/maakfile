@@ -1,0 +1,18 @@
+
+generator: generator.o rtttl_player.o rtttl_string_converter.o
+	g++ generator.o rtttl_player.o rtttl_string_converter.o -o generator.exe
+
+generator.o: generator.cpp rtttl_string_converter.hpp rtttl_player.hpp fur_elise.hpp
+	g++ -c generator.cpp -o generator.o
+
+rtttl_player.o: rtttl_player.cpp rtttl_player.hpp note_player.hpp note.hpp
+	g++ -c rtttl_player.cpp -o rtttl_player.o
+
+rtttl_string_converter.o: rtttl_string_converter.cpp rtttl_string_converter.hpp note_player.hpp note.hpp
+	g++ -c rtttl_string_converter.cpp -o rtttl_string_converter.o
+
+clean:
+	rm -rf *o generator.exe melody.cpp
+
+melody.cpp: generator
+	./generator.exe

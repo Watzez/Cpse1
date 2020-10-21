@@ -1,0 +1,33 @@
+
+main: main.o note_player_pc.o rtttl_player.o melody.o
+	g++ main.o  note_player_pc.o rtttl_player.o melody.o -o main.exe
+
+main.o: main.cpp fur_elise.hpp rtttl_player.hpp melody.cpp note_player_pc.hpp
+	g++ -c main.cpp -o main.o
+
+note_player_pc.o: note_player_pc.cpp note_player_pc.hpp note_player.hpp note.hpp
+	g++ -c note_player_pc.cpp -o note_player_pc.o
+
+melody.o: melody.cpp melody.hpp note_player.hpp note.hpp
+	g++ -c melody.cpp -o melody.o
+
+rtttl_player.o: rtttl_player.cpp rtttl_player.hpp note_player.hpp note.hpp
+	g++ -c rtttl_player.cpp -o rtttl_player.o
+
+rtttl_string_converter.o: rtttl_string_converter.cpp rtttl_string_converter.hpp note_player.hpp note.hpp
+	g++ -c rtttl_string_converter.cpp -o rtttl_string_converter.o
+
+generator: generator.o rtttl_player.o rtttl_string_converter.o
+	g++ generator.o rtttl_player.o rtttl_string_converter.o -o generator.exe
+
+generator.o: generator.cpp rtttl_string_converter.hpp rtttl_player.hpp fur_elise.hpp
+	g++ -c generator.cpp -o generator.o
+
+melody.cpp: generator
+	./generator.exe
+
+clean:
+	rm -rf *o main.exe generator.exe
+
+run: main
+	make run

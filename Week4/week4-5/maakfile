@@ -1,0 +1,17 @@
+
+asmfiller: asmfiller.o
+	g++ asmfiller.o -o asmfiller.exe
+
+asmfiller.o: asmfiller.cpp match.hpp compressor.hpp
+	g++ -c asmfiller.cpp -o asmfiller.o
+
+clean:
+	rm -rf *o asmfiller.exe compressed.asm 
+
+run: asmfiller
+ifneq ("$(wildcard compressed.asm)","")
+	make run
+else
+	./asmfiller.exe
+	make run
+endif
